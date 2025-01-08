@@ -1,7 +1,7 @@
 export module eutilities;
 
 #ifdef _WIN32
-export import :windows;
+//export import :windows;
 #endif
 
 export namespace eutilities
