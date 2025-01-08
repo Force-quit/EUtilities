@@ -1,12 +1,9 @@
-module;
+#include "EUtilities-Windows.h"
 
+#include "EUtilities.h"
 #include <Windows.h>
 #include <string_view>
 #include <thread>
-
-module eutilities:windows;
-
-import eutilities;
 
 constexpr bool eutilities::isMouseKey(Key key)
 {

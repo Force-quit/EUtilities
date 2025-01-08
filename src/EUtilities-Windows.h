@@ -1,4 +1,4 @@
-module;
+#pragma once
 
 #include <Windows.h>
 #include <string_view>
@@ -6,9 +6,7 @@ module;
 #include <span>
 #include <array>
 
-export module eutilities:windows;
-
-export namespace eutilities
+namespace eutilities
 {
 	// Usefull Windows console utilities
 	namespace Console

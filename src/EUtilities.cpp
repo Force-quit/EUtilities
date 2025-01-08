@@ -1,10 +1,8 @@
-module;
+#include "EUtilities.h"
 
 #include <iostream>
 #include <thread>
 #include <chrono>
-
-module eutilities;
 
 void eutilities::resetConsoleInput()
 {

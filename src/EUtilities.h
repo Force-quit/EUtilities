@@ -1,10 +1,6 @@
-export module eutilities;
+#pragma once
 
-#ifdef _WIN32
-//export import :windows;
-#endif
-
-export namespace eutilities
+namespace eutilities
 {
 	//Reset the std::cin buffer.
 	void resetConsoleInput();
