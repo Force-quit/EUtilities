@@ -14,4 +14,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build Project
-      uses: threeal/cmake-action@v2.1.0
+      run: cmake -B build
+    - name: Build again?
+      run: cmake --build build
