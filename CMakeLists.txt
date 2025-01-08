@@ -3,14 +3,9 @@ project(EUtilities LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_DEBUG_POSTFIX "-Debug")
 
-add_library(EUtilities STATIC src/EUtilities.cpp src/EUtilities.h)
-target_include_directories(EUtilities PUBLIC src)
-
-if(MSVC)
-    target_compile_options(EUtilities PRIVATE /std:c++latest)
-endif()
+add_library(EUtilities src/EUtilities.cpp include/EUtilities.h)
+target_include_directories(EUtilities PUBLIC include)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -23,11 +18,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 add_executable(EUtilitiesTest tests/main.cpp tests/EUtilitiesTest.cpp)
 target_link_libraries(EUtilitiesTest PRIVATE EUtilities GTest::gtest_main)
-target_include_directories(EUtilitiesTest PRIVATE src)
-
-if(MSVC)
-    target_compile_options(EUtilitiesTest PRIVATE /std:c++latest)
-endif()
+target_include_directories(EUtilitiesTest PRIVATE include)
 
 include(GoogleTest)
 gtest_discover_tests(EUtilitiesTest)
