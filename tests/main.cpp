@@ -1,8 +1,7 @@
-﻿#include "../src/EUtilities.h"
-#include "../src/EUtilities-Windows.h"
+﻿#include <gtest/gtest.h>
 
-int main()
+int main(int argc, char** argv)
 {
-	eutilities::sleepFor(1000);
-	eutilities::fullKeyPress(eutilities::Key::WINDOWS);
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
 }
