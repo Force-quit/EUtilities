@@ -1,21 +1,28 @@
 name: Create release
-
 on:
   push:
     tags:
       - v*.*
-
 jobs:
   build:
     runs-on: windows-latest
     steps:
+    - uses: actions/checkout@v4
+    - name: Generate build files
+      run: cmake -B build
+    - name: Build project Debug
+      run: cmake --build build --target EUtilities --config Debug
+    - name: Build project Release
+      run: cmake --build build --target EUtilities --config Release
+  release:
+    needs: build
+    runs-on: windows-latest
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build
-        run: echo ${{ github.sha }} > Release.txt
-      - name: Test
-        run: cat Release.txt
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: Release.txt
+          files: |
+            "D:/a/EUtilities/EUtilities/build/Debug/EUtilities.lib"
+            "D:/a/EUtilities/EUtilities/build/Release/EUtilities.lib"
