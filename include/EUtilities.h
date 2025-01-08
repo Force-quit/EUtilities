@@ -427,6 +427,13 @@ namespace eutilities
 	[[nodiscard]] bool isPressed(int key);
 
 	/**
+	* Check what key is being pressed.
+	*
+	* @return A vector with all the pressed keys.
+	*/
+	[[nodiscard]] std::vector<Key> getPressedKeys();
+
+	/**
 	* Returns execution only when the specified
 	* key was pressed and then released.
 	*

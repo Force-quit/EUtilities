@@ -5,6 +5,7 @@
 #include <string_view>
 #include <thread>
 #include <Windows.h>
+#include <algorithm>
 
 using namespace std::chrono_literals;
 
@@ -91,6 +92,23 @@ void eutilities::setMouseReleaseInput(Key mouseKey, INPUT& mouseInput)
 		mouseInput.mi.mouseData = XBUTTON2;
 		break;
 	}
+}
+
+std::vector<eutilities::Key> eutilities::getPressedKeys()
+{
+	std::vector<Key> pressedKeys;
+	std::array<BYTE, 256> keyStates{};
+	if (GetKeyboardState(keyStates.data()))
+	{
+		for (int i{}; i < keyStates.size() - 1; ++i)
+		{
+			if (keyStates[i] & 0b1000'0000)
+			{
+				pressedKeys.push_back(static_cast<Key>(i));
+			}
+		}
+	}
+	return pressedKeys;
 }
 
 void eutilities::waitForFullKeyPress(Key key)
