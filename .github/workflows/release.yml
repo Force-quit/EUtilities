@@ -23,14 +23,14 @@ jobs:
       - name: Build project Release
         run: cmake --build build --target EUtilities --config Release
 
-      # Upload artifacts
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: eutilities-libs
-          path: |
-            build/Debug/EUtilities.lib
-            build/Release/EUtilities.lib
+      # # Upload artifacts
+      # - name: Upload build artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: eutilities-libs
+      #     path: |
+      #       build/Debug/EUtilities.lib
+      #       build/Release/EUtilities.lib
 
   release:
     name: Create release
@@ -40,18 +40,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Download artifacts from the build job
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: eutilities-libs
+      # # Download artifacts from the build job
+      # - name: Download build artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: eutilities-libs
 
       - name: Where are my files
         run: ls -R
-      # # Create the release and upload artifacts
-      # - name: Release
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     files: |
-      #       D:/a/EUtilities/EUtilities
-      #       build/Release/EUtilities.lib
+      # Create the release and upload artifacts
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Debug/EUtilities.lib
+            Release/EUtilities.lib
