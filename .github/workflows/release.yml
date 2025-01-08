@@ -46,10 +46,12 @@ jobs:
         with:
           name: eutilities-libs
 
-      # Create the release and upload artifacts
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            build/Debug/EUtilities.lib
-            build/Release/EUtilities.lib
+      - name: Where are my files
+        run: ls -R
+      # # Create the release and upload artifacts
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     files: |
+      #       D:/a/EUtilities/EUtilities
+      #       build/Release/EUtilities.lib
