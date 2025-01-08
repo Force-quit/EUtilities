@@ -1,19 +1,16 @@
-name: C/C++ CI
+name: Build project
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v4
-    - name: Build Project
+    - name: Generate build files
       run: cmake -B build
-    - name: Build again?
-      run: cmake --build build
+    - name: Build project
+      run: cmake --build build --target EUtilities
