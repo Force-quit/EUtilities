@@ -22,7 +22,3 @@ target_include_directories(EUtilitiesTest PRIVATE include)
 
 include(GoogleTest)
 gtest_discover_tests(EUtilitiesTest)
-
-add_executable(EUtilitiesManualTest tests/EUtilitiesManualTest.cpp)
-target_link_libraries(EUtilitiesManualTest PRIVATE EUtilities)
-target_include_directories(EUtilitiesManualTest PRIVATE include)
