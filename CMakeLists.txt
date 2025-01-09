@@ -6,9 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
     src/EUtilities.cpp
+    src/EUtilities-Windows.cpp
     src/EShortcutListener.cpp
     include/EShortcutListener.hpp
     include/EUtilities.hpp
+    include/EUtilities-Windows.hpp
 )
 
 add_library(EUtilities ${SOURCES})

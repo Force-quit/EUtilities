@@ -1,5 +1,6 @@
 #include "EShortcutListener.hpp"
 
+#include "EUtilities-Windows.hpp"
 #include "EUtilities.hpp"
 #include <functional>
 #include <vector>

@@ -1,5 +1,6 @@
-#include "EUtilities.hpp"
 #include "EShortcutListener.hpp"
+#include "EUtilities-Windows.hpp"
+#include "EUtilities.hpp"
 #include <print>
 #include <vector>
 #include <thread>
