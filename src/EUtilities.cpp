@@ -5,7 +5,6 @@
 #include <string_view>
 #include <thread>
 #include <Windows.h>
-#include <algorithm>
 
 using namespace std::chrono_literals;
 
