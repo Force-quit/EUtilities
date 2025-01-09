@@ -4,9 +4,6 @@
 
 namespace eutilities
 {
-	//Reset the std::cin buffer.
-	void resetConsoleInput();
-
 	/**
 	* Sleep for a certain time.
 	*

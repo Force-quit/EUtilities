@@ -56,8 +56,8 @@ TEST(EShortcutListener, KeyDetection)
 	listener1.startListening(incrementCounter);
 	listener2.startListening(incrementCounter);
 	eutilities::sleepFor(std::chrono::milliseconds(100));
-	eutilities::fullKeyPress(Key::A);
-	eutilities::fullKeyPress(Key::S);
+	eutilities::keyPressAndRelease(Key::A);
+	eutilities::keyPressAndRelease(Key::S);
 	eutilities::sleepFor(std::chrono::milliseconds(100));
 	listener1.stopListening();
 	listener2.stopListening();

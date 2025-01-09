@@ -99,7 +99,7 @@ std::vector<eutilities::Key> eutilities::getPressedKeys()
 	return pressedKeys;
 }
 
-void eutilities::waitForFullKeyPress(Key key)
+void eutilities::waitForKeyPressAndRelease(Key key)
 {
 	waitForKeyPress(key);
 	waitForKeyRelease(key);
@@ -121,16 +121,7 @@ void eutilities::waitForKeyRelease(Key key)
 	}
 }
 
-void eutilities::Console::hideCursor()
-{
-	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO lpCursor{};
-	lpCursor.bVisible = false;
-	lpCursor.dwSize = 20;
-	SetConsoleCursorInfo(console, &lpCursor);
-}
-
-void eutilities::pressKey(Key key)
+void eutilities::keyPress(Key key)
 {
 	INPUT input{};
 	if (isMouseKey(key))
@@ -146,7 +137,7 @@ void eutilities::pressKey(Key key)
 	SendInput(1, &input, sizeof(INPUT));
 }
 
-void eutilities::releaseKey(Key key)
+void eutilities::keyRelease(Key key)
 {
 	INPUT input{};
 	if (isMouseKey(key))
@@ -162,22 +153,11 @@ void eutilities::releaseKey(Key key)
 	SendInput(1, &input, sizeof(INPUT));
 }
 
-void eutilities::fullKeyPress(Key key)
+void eutilities::keyPressAndRelease(Key key)
 {
-	pressKey(key);
+	keyPress(key);
 	sleepFor(30ms);
-	releaseKey(key);
-}
-
-void eutilities::ctrlV()
-{
-	pressKey(Key::CONTROL);
-	sleepFor(10ms);
-	pressKey(Key::V);
-	sleepFor(10ms);
-
-	releaseKey(Key::CONTROL);
-	releaseKey(Key::V);
+	keyRelease(key);
 }
 
 void eutilities::humanType(std::wstring_view string, std::chrono::milliseconds keyPressInterval)
@@ -197,33 +177,6 @@ void eutilities::humanType(std::wstring_view string, std::chrono::milliseconds k
 		SendInput(1, &input, sizeof(INPUT));
 
 		sleepFor(keyPressInterval);
-	}
-}
-
-void eutilities::copyToClipBoard(std::span<const char> data)
-{
-	if (OpenClipboard(NULL))
-	{
-		EmptyClipboard();
-
-		const size_t dataSize = (data.size() + 1) * sizeof(wchar_t); // Include null terminator
-		HGLOBAL globalAlloc = GlobalAlloc(GMEM_MOVEABLE, dataSize);
-
-		if (globalAlloc)
-		{
-			wchar_t* dataDestination = static_cast<wchar_t*>(GlobalLock(globalAlloc));
-			if (dataDestination)
-			{
-				std::copy(data.begin(), data.end(), dataDestination);
-				dataDestination[data.size()] = L'\0'; // Null terminator
-				GlobalUnlock(globalAlloc);
-				SetClipboardData(CF_UNICODETEXT, globalAlloc);
-			}
-
-			GlobalFree(globalAlloc);
-		}
-
-		CloseClipboard();
 	}
 }
 
