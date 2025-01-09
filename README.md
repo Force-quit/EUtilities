@@ -1,6 +1,6 @@
 # EUtilities 🖱️⌨️
 
-**EUtilities** is a lightweight C++ library designed for Windows keyboard and mouse utilities. Whether you need to simulate key presses or detect key events, this library is built to make it easy to integrate these functionalities into your C++ projects.
+**EUtilities** (Émile Utilities) is a lightweight C++ library designed for Windows keyboard and mouse utilities. Whether you need to simulate key presses or detect key events, this library is built to make it easy to integrate these functionalities into your C++ projects.
 
 ---
 
