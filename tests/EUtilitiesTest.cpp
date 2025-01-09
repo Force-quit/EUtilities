@@ -1,4 +1,4 @@
-#include "EUtilities.h"
+#include "EUtilities.hpp"
 #include <gtest/gtest.h>
 
 TEST(EUtilities, SleepTest)
