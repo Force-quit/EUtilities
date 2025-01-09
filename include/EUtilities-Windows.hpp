@@ -9,13 +9,6 @@
 
 namespace eutilities
 {
-	// Usefull Windows console utilities
-	namespace Console
-	{
-		// Make the console's cursor invisible.
-		void hideCursor();
-	};
-
 	/**
 	* Represents physical buttons you can press.
 	*
@@ -662,7 +655,7 @@ namespace eutilities
 	*
 	* @param key The key you want to wait for.
 	*/
-	void waitForFullKeyPress(Key key);
+	void waitForKeyPressAndRelease(Key key);
 
 	/**
 	* Returns execution only when the specified
@@ -681,26 +674,23 @@ namespace eutilities
 	void waitForKeyRelease(Key key);
 
 	/**
+	* Simulates a full key press (press and release)
+	* with the specified key.
+	* @param key The key to press and release.
+	*/
+	void keyPressAndRelease(Key key);
+
+	/**
 	* Simulates a key press with the specified key.
 	* @param key The key to press.
 	*/
-	void pressKey(Key key);
+	void keyPress(Key key);
 
 	/**
 	* Simulates a key release with the specified key.
 	* @param key The key to release.
 	*/
-	void releaseKey(Key key);
-
-	/**
-	* Simulates a full key press (press and release)
-	* with the specified key.
-	* @param key The key to press and release.
-	*/
-	void fullKeyPress(Key key);
-
-	// Simulates the CTRL + V keyboard shortcut
-	void ctrlV();
+	void keyRelease(Key key);
 
 	/**
 	* Simulates the typing of a string.
@@ -709,11 +699,4 @@ namespace eutilities
 	* @param keyPressInterval The interval between key presses.
 	*/
 	void humanType(std::wstring_view string, std::chrono::milliseconds keyPressInterval = std::chrono::milliseconds(120));
-
-	/**
-	* Copy a sequence of characters into the Windows clipboard.
-	*
-	* @param dataToCopy A sequence of unicode characters.
-	*/
-	void copyToClipBoard(std::span<const char> dataToCopy);
 }
