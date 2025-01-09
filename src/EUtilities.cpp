@@ -30,11 +30,11 @@ constexpr bool eutilities::isMouseKey(Key key)
 {
 	switch (key)
 	{
-	case eutilities::Key::LEFT_CLICK:
-	case eutilities::Key::RIGHT_CLICK:
-	case eutilities::Key::MIDDLE_MOUSE:
-	case eutilities::Key::MOUSE_BUTTON1:
-	case eutilities::Key::MOUSE_BUTTON2:
+	case Key::LEFT_CLICK:
+	case Key::RIGHT_CLICK:
+	case Key::MIDDLE_MOUSE:
+	case Key::MOUSE_BUTTON1:
+	case Key::MOUSE_BUTTON2:
 		return true;
 	}
 
@@ -47,20 +47,20 @@ void eutilities::setMousePressInput(Key mouseKey, INPUT& mouseInput)
 
 	switch (mouseKey)
 	{
-	case eutilities::Key::LEFT_CLICK:
+	case Key::LEFT_CLICK:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
 		break;
-	case eutilities::Key::RIGHT_CLICK:
+	case Key::RIGHT_CLICK:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
 		break;
-	case eutilities::Key::MIDDLE_MOUSE:
+	case Key::MIDDLE_MOUSE:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_MIDDLEDOWN;
 		break;
-	case eutilities::Key::MOUSE_BUTTON1:
+	case Key::MOUSE_BUTTON1:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_XDOWN;
 		mouseInput.mi.mouseData = XBUTTON1;
 		break;
-	case eutilities::Key::MOUSE_BUTTON2:
+	case Key::MOUSE_BUTTON2:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_XDOWN;
 		mouseInput.mi.mouseData = XBUTTON2;
 		break;
@@ -73,20 +73,20 @@ void eutilities::setMouseReleaseInput(Key mouseKey, INPUT& mouseInput)
 
 	switch (mouseKey)
 	{
-	case eutilities::Key::LEFT_CLICK:
+	case Key::LEFT_CLICK:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_LEFTUP;
 		break;
-	case eutilities::Key::RIGHT_CLICK:
+	case Key::RIGHT_CLICK:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_RIGHTUP;
 		break;
-	case eutilities::Key::MIDDLE_MOUSE:
+	case Key::MIDDLE_MOUSE:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_MIDDLEUP;
 		break;
-	case eutilities::Key::MOUSE_BUTTON1:
+	case Key::MOUSE_BUTTON1:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_XUP;
 		mouseInput.mi.mouseData = XBUTTON1;
 		break;
-	case eutilities::Key::MOUSE_BUTTON2:
+	case Key::MOUSE_BUTTON2:
 		mouseInput.mi.dwFlags = MOUSEEVENTF_XUP;
 		mouseInput.mi.mouseData = XBUTTON2;
 		break;
@@ -99,7 +99,7 @@ std::vector<eutilities::Key> eutilities::getPressedKeys()
 	std::array<BYTE, 256> keyStates{};
 	if (GetKeyboardState(keyStates.data()))
 	{
-		for (eutilities::Key i : keys)
+		for (Key i : keys)
 		{
 			if (keyStates[static_cast<int>(i)] & 0b1000'0000)
 			{
