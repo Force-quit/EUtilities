@@ -18,12 +18,12 @@ if(WIN32)
     )
 endif()
 
-if (MSVC)
-    add_compile_options(/EHsc)
-endif()
-
 add_library(EUtilities ${SOURCES})
 target_include_directories(EUtilities PUBLIC include)
+
+if(MSVC)
+    target_compile_options(EUtilities PRIVATE /EHsc)
+endif()
 
 if(PROJECT_IS_TOP_LEVEL)
     add_subdirectory(tests)
