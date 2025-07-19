@@ -85,15 +85,11 @@ void eutilities::setMouseReleaseInput(Key mouseKey, INPUT& mouseInput)
 std::vector<eutilities::Key> eutilities::getPressedKeys()
 {
 	std::vector<Key> pressedKeys;
-	std::array<BYTE, 256> keyStates{};
-	if (GetKeyboardState(keyStates.data()))
+	for (Key i : keys)
 	{
-		for (Key i : keys)
+		if (isPressed(i))
 		{
-			if (keyStates[static_cast<int>(i)] & 0b1000'0000)
-			{
-				pressedKeys.push_back(i);
-			}
+			pressedKeys.push_back(i);
 		}
 	}
 	return pressedKeys;
@@ -182,7 +178,7 @@ void eutilities::humanType(std::wstring_view string, std::chrono::milliseconds k
 
 bool eutilities::isPressed(Key key)
 {
-	return GetKeyState(key) & 0x8000;
+	return GetAsyncKeyState(key) & 0x8000; // if high-order bit is set
 }
 
 bool eutilities::isPressed(int key)

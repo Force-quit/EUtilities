@@ -19,10 +19,10 @@ void printPressedKeys(std::span<eutilities::Key> pressedKeys)
 
 int main()
 {
-	while (!eutilities::isPressed(eutilities::ESCAPE))
+	while (true)
 	{
-		std::vector<eutilities::Key> pressedKeys(eutilities::getPressedKeys());
-
+		std::vector<eutilities::Key> pressedKeys{ eutilities::getPressedKeys() };
+		
 		if (!pressedKeys.empty())
 		{
 			printPressedKeys(pressedKeys);
