@@ -10,9 +10,7 @@
 namespace eutilities
 {
 	/**
-	* Represents physical buttons you can press.
-	*
-	* @see [Windows virtual key codes](https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes)
+		Represents physical buttons you can press. Uses Windows virtual key codes.
 	*/
 	enum Key : std::uint16_t
 	{
@@ -141,7 +139,7 @@ namespace eutilities
 	};
 
 	// Array to iterate over all the values of the Key enum.
-	constexpr auto keys = std::array{
+	constexpr std::array keys{
 		LEFT_CLICK,
 		RIGHT_CLICK,
 		MIDDLE_MOUSE,
@@ -256,7 +254,7 @@ namespace eutilities
 	};
 
 	// Array to iterate over the keyboard keys of the Key enum.
-	constexpr auto keyboardKeys = std::array{
+	constexpr std::array keyboardKeys{
 		ESCAPE,
 		F1,
 		F2,
@@ -366,7 +364,7 @@ namespace eutilities
 	};
 
 	// Array to iterate over the mouse keys of the Key enum.
-	constexpr auto mouseKeys = std::array{
+	constexpr std::array mouseKeys{
 		LEFT_CLICK,
 		RIGHT_CLICK,
 		MIDDLE_MOUSE,
@@ -380,7 +378,7 @@ namespace eutilities
 	* @param key An enum value of eutilities::Key.
 	* @return The name of the key if it's known. If not, an empty std::optional.
 	*/
-	[[nodiscard]] constexpr std::string nameOf(Key key)
+	[[nodiscard]] constexpr std::string_view nameOf(Key key)
 	{
 		switch (key)
 		{
@@ -618,9 +616,8 @@ namespace eutilities
 	*
 	* @param key An enum value of eutilities::Key.
 	* @return The name of the key if it's known. If not, an empty std::optional.
-	* @overload
 	*/
-	[[nodiscard]] constexpr std::string nameOf(int key)
+	[[nodiscard]] constexpr std::string_view nameOf(int key)
 	{
 		return nameOf(static_cast<Key>(key));
 	}

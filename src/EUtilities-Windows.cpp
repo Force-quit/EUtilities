@@ -12,7 +12,7 @@ namespace eutilities
 {
 	void setMouseReleaseInput(Key mouseKey, INPUT& mouseInput);
 	void setMousePressInput(Key mouseKey, INPUT& mouseInput);
-	constexpr bool isMouseKey(Key key);
+	[[nodiscard]] constexpr bool isMouseKey(Key key);
 }
 
 constexpr bool eutilities::isMouseKey(Key key)
@@ -32,8 +32,6 @@ constexpr bool eutilities::isMouseKey(Key key)
 
 void eutilities::setMousePressInput(Key mouseKey, INPUT& mouseInput)
 {
-	mouseInput.type = INPUT_MOUSE;
-
 	switch (mouseKey)
 	{
 	case Key::LEFT_CLICK:
@@ -58,8 +56,6 @@ void eutilities::setMousePressInput(Key mouseKey, INPUT& mouseInput)
 
 void eutilities::setMouseReleaseInput(Key mouseKey, INPUT& mouseInput)
 {
-	mouseInput.type = INPUT_MOUSE;
-
 	switch (mouseKey)
 	{
 	case Key::LEFT_CLICK:
@@ -122,6 +118,7 @@ void eutilities::keyPress(Key key)
 	INPUT input{};
 	if (isMouseKey(key))
 	{
+		input.type = INPUT_MOUSE;
 		setMousePressInput(key, input);
 	}
 	else
@@ -138,6 +135,7 @@ void eutilities::keyRelease(Key key)
 	INPUT input{};
 	if (isMouseKey(key))
 	{
+		input.type = INPUT_MOUSE;
 		setMouseReleaseInput(key, input);
 	}
 	else
@@ -161,7 +159,7 @@ void eutilities::humanType(std::wstring_view string, std::chrono::milliseconds k
 	INPUT input{};
 	input.type = INPUT_KEYBOARD;
 
-	for (auto i : string)
+	for (wchar_t i : string)
 	{
 		input.ki.dwFlags = KEYEVENTF_UNICODE;
 		input.ki.wScan = i;
