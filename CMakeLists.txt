@@ -1,20 +1,20 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 4.1.1)
 project(EUtilities LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
-    src/EUtilities.cpp
-    src/EShortcutListener.cpp
-    include/EShortcutListener.hpp
     include/EUtilities.hpp
+    src/EUtilities.cpp
 )
 
 if(WIN32)
     list(APPEND SOURCES
-        src/EUtilities-Windows.cpp
         include/EUtilities-Windows.hpp
+        include/EShortcutListener.hpp
+        src/EUtilities-Windows.cpp
+        src/EShortcutListener.cpp
     )
 endif()
 

@@ -1,13 +1,18 @@
 #pragma once
 
 #include <chrono>
+#include <thread>
 
 namespace eutilities
 {
 	/**
 	* Sleep for a certain time.
 	*
-	* @param iMsDuration The duration in milliseconds.
+	* @param iDuration The duration to sleep.
 	*/
-	void sleepFor(std::chrono::milliseconds iMsDuration);
+	template<typename Rep, typename Period>
+	void sleepFor(std::chrono::duration<Rep, Period> iDuration)
+	{
+		std::this_thread::sleep_for(iDuration);
+	}
 }

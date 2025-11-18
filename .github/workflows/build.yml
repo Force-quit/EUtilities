@@ -1,17 +1,29 @@
-name: Build project
+name: Build CMake project
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+
 jobs:
-  Build:
-    runs-on: windows-latest
+  build-project:
+    name: Build Project
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Generate build files
-      run: cmake -B build
-    - name: Build project Debug
-      run: cmake --build build --target EUtilities --config Debug
-    - name: Build project Release
-      run: cmake --build build --target EUtilities --config Release
+      - name: Checkout Project
+        uses: actions/checkout@v5.0.1
+
+      - name: Setup CMake
+        uses: lukka/get-cmake@latest
+        
+      - name: Check new CMake Version
+        run: cmake --version
+
+      - name: Generate build files
+        run: cmake -B build
+    
+      - name: Build project Debug
+        run: cmake --build build --target EUtilities --config Debug
+      
+      - name: Build project Release
+        run: cmake --build build --target EUtilities --config Release
