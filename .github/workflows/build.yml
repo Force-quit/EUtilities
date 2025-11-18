@@ -5,13 +5,31 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  Build:
-    runs-on: windows-latest
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        config: [Debug, Release]
+    runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
-    - name: Generate build files
-      run: cmake -B build
-    - name: Build project Debug
-      run: cmake --build build --target EUtilities --config Debug
-    - name: Build project Release
-      run: cmake --build build --target EUtilities --config Release
+      - uses: actions/checkout@v3
+
+      - name: Setup CMake 4.1.1
+        uses: kitware/setup-cmake@v3
+        with:
+          cmake-version: 4.1.1
+
+      - name: Install Ninja (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y ninja-build
+
+      - name: Configure (Windows, Ninja + MSVC x64)
+        if: matrix.os == 'windows-latest'
+        run: cmake -S . -B build -G "Ninja" -A x64 -DCMAKE_BUILD_TYPE=${{ matrix.config }}
+
+      - name: Configure (Ubuntu, Ninja)
+        if: matrix.os == 'ubuntu-latest'
+        run: cmake -S . -B build -G "Ninja" -DCMAKE_BUILD_TYPE=${{ matrix.config }}
+
+      - name: Build EUtilities
+        run: cmake --build build --target EUtilities --config ${{ matrix.config }}
