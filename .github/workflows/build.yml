@@ -6,9 +6,12 @@ on:
     branches: ["main"]
 
 jobs:
-  build-project:
-    name: Build Project
-    runs-on: ubuntu-latest
+  build:
+    name: Build
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Project
         uses: actions/checkout@v5.0.1
