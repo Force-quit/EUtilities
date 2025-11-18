@@ -6,15 +6,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
     include/EUtilities.hpp
-    include/EShortcutListener.hpp
     src/EUtilities.cpp
-    src/EShortcutListener.cpp
 )
 
 if(WIN32)
     list(APPEND SOURCES
         include/EUtilities-Windows.hpp
+        include/EShortcutListener.hpp
         src/EUtilities-Windows.cpp
+        src/EShortcutListener.cpp
     )
 endif()
 
