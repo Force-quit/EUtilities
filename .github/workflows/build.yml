@@ -8,10 +8,24 @@ on:
 jobs:
   build-project:
     name: Build Project
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.1
 
-      - name: Build Project
-        uses: threeal/cmake-action@v2.1.0
+      - name: Setup CMake
+        uses: lukka/get-cmake@v2
+        with:
+          cmakeVersion: "4.1.1" 
+        
+      - name: Check new CMake Version
+        run: cmake --version
+
+      - name: Generate build files
+        run: cmake -B build
+    
+      - name: Build project Debug
+        run: cmake --build build --target EUtilities --config Debug
+      
+      - name: Build project Release
+        run: cmake --build build --target EUtilities --config Release
