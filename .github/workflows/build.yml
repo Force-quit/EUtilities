@@ -1,9 +1,10 @@
-name: Build project
+name: Build CMake project
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+
 jobs:
   build:
     strategy:
@@ -14,14 +15,59 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup CMake 4.1.1
-        uses: kitware/setup-cmake@v3
+      - id: get_cmake
+        name: Read CMake version from CMakeLists.txt
+        uses: actions/github-script@v6
         with:
-          cmake-version: 4.1.1
+          script: |
+            const fs = require('fs');
+            const txt = fs.readFileSync('CMakeLists.txt', 'utf8');
+            const m = txt.match(/cmake_minimum_required\s*\(\s*VERSION\s+([^\s\)]+)/i);
+            return m ? m[1] : '4.1.1';
 
-      - name: Install Ninja (Ubuntu)
+      - name: Install CMake and Ninja (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get update && sudo apt-get install -y ninja-build
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y curl ca-certificates tar gzip
+          ver="${{ steps.get_cmake.outputs.result }}"
+          base="${ver%%-*}"
+          echo "Installing CMake version: $ver (using base: $base)"
+          url="https://github.com/Kitware/CMake/releases/download/v${base}/cmake-${base}-linux-x86_64.tar.gz"
+          echo "Downloading $url"
+          curl -fsSL "$url" -o cmake.tar.gz
+          mkdir -p "$RUNNER_TEMP/cmake"
+          tar -xzf cmake.tar.gz -C "$RUNNER_TEMP/cmake" --strip-components=1
+          echo "$RUNNER_TEMP/cmake/bin" >> $GITHUB_PATH
+          sudo apt-get install -y ninja-build
+
+      - name: Install CMake and Ninja (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: powershell
+        run: |
+          $ver = '${{ steps.get_cmake.outputs.result }}'
+          $base = $ver.Split('-')[0]
+          Write-Host "Installing CMake version: $ver (using base: $base)"
+          $url = "https://github.com/Kitware/CMake/releases/download/v$base/cmake-$base-windows-x86_64.zip"
+          Write-Host "Downloading $url"
+          $zip = Join-Path $env:TEMP 'cmake.zip'
+          $dest = Join-Path $env:RUNNER_TEMP 'cmake'
+          Invoke-WebRequest -Uri $url -OutFile $zip
+          Expand-Archive -LiteralPath $zip -DestinationPath $env:RUNNER_TEMP -Force
+          # Move the extracted cmake-* folder to a stable location
+          $extracted = Get-ChildItem -Path $env:RUNNER_TEMP -Directory | Where-Object { $_.Name -like 'cmake-*' } | Select-Object -First 1
+          if ($extracted) {
+            if (Test-Path $dest) { Remove-Item -Recurse -Force $dest }
+            Move-Item -Path $extracted.FullName -Destination $dest
+          } else {
+            New-Item -ItemType Directory -Path $dest | Out-Null
+          }
+          Add-Content -Path $env:GITHUB_PATH -Value "$dest\bin"
+          choco install ninja -y
+
+      - name: Verify CMake
+        run: cmake --version
 
       - name: Configure (Windows, Ninja + MSVC x64)
         if: matrix.os == 'windows-latest'
