@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
     include/EUtilities.hpp
+    src/EUtilities.cpp
 )
 
 if(WIN32)
