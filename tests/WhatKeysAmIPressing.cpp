@@ -1,5 +1,6 @@
 #include "EUtilities.hpp"
 #include "EUtilities-Windows.hpp"
+
 #include <vector>
 #include <string>
 #include <print>
@@ -9,7 +10,7 @@ void printPressedKeys(std::span<eutilities::Key> pressedKeys)
 {
 	std::print("Pressing : ");
 
-	for (auto i : pressedKeys)
+	for (eutilities::Key i : pressedKeys)
 	{
 		std::print("{} ", eutilities::nameOf(i));
 	}

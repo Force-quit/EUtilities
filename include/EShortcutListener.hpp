@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EUtilities-Windows.hpp"
+
 #include <functional>
 #include <vector>
 #include <thread>
@@ -26,8 +27,7 @@ namespace eutilities
 		}
 
 		void setTargetKeys(std::initializer_list<Key> iKeys);
-		void setTargetKeys(const Key iKey);
-		void setTargetKeys(std::span<const Key> iKeys);
+		void setTargetKeys(std::span<Key> iKeys);
 
 		void startListening(std::function<void()> iCallbackFunction);
 		void stopListening();

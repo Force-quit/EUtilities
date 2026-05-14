@@ -376,7 +376,7 @@ namespace eutilities
 	* Get the display name of the specified key.
 	*
 	* @param key An enum value of eutilities::Key.
-	* @return The name of the key if it's known. If not, an empty std::optional.
+	* @return The name of the key if it's known.
 	*/
 	[[nodiscard]] constexpr std::string_view nameOf(Key key)
 	{
@@ -615,7 +615,7 @@ namespace eutilities
 	* Get the display name of the specified key.
 	*
 	* @param key An enum value of eutilities::Key.
-	* @return The name of the key if it's known. If not, an empty std::optional.
+	* @return The name of the key if it's known.
 	*/
 	[[nodiscard]] constexpr std::string_view nameOf(int key)
 	{

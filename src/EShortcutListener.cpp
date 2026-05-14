@@ -1,7 +1,8 @@
 #include "EShortcutListener.hpp"
 
-#include "EUtilities-Windows.hpp"
 #include "EUtilities.hpp"
+#include "EUtilities-Windows.hpp"
+
 #include <functional>
 #include <vector>
 #include <initializer_list>
@@ -12,8 +13,8 @@ namespace eutilities
 {
 	void EShortcutListener::startListening(std::function<void()> iCallbackFunction)
 	{
-		mCallbackFunction = iCallbackFunction;
 		stopListening();
+		mCallbackFunction = std::move(iCallbackFunction);
 		mListenLoop = std::jthread(std::bind_front(&EShortcutListener::mainLoop, this));
 	}
 
@@ -28,17 +29,17 @@ namespace eutilities
 
 	void EShortcutListener::mainLoop(std::stop_token iStopToken)
 	{
-		uint8_t pressedKeys{};
+		uint8_t pressedKeysCount{};
 		bool canTrigger{ true };
 
 		while (!iStopToken.stop_requested())
 		{
-			for (auto i : mShortcutKeys)
+			for (eutilities::Key i : mShortcutKeys)
 			{
 				if (eutilities::isPressed(i))
 				{
-					++pressedKeys;
-					if (pressedKeys == mShortcutKeys.size() && canTrigger)
+					++pressedKeysCount;
+					if (pressedKeysCount == mShortcutKeys.size() && canTrigger)
 					{
 						mCallbackFunction();
 						canTrigger = false;
@@ -46,7 +47,7 @@ namespace eutilities
 				}
 				else
 				{
-					pressedKeys = 0;
+					pressedKeysCount = 0;
 					canTrigger = true;
 				}
 			}
@@ -56,24 +57,19 @@ namespace eutilities
 	}
 
 	EShortcutListener::EShortcutListener(std::initializer_list<Key> iKeys) noexcept
-		: mShortcutKeys(iKeys)
+		: mShortcutKeys{ iKeys }
 	{
 
 	}
 
+	// C++26 converts initializer list to span, but for now we need this overload
 	void EShortcutListener::setTargetKeys(std::initializer_list<Key> iKeys)
 	{
 		mShortcutKeys.assign_range(iKeys);
 	}
 
-	void EShortcutListener::setTargetKeys(std::span<const Key> iKeys)
+	void EShortcutListener::setTargetKeys(std::span<Key> iKeys)
 	{
 		mShortcutKeys.assign_range(iKeys);
-	}
-
-	void EShortcutListener::setTargetKeys(Key iKey)
-	{
-		mShortcutKeys.clear();
-		mShortcutKeys.emplace_back(iKey);
 	}
 }

@@ -1,6 +1,7 @@
 #include "EUtilities-Windows.hpp"
 
 #include "EUtilities.hpp"
+
 #include <chrono>
 #include <string_view>
 #include <thread>

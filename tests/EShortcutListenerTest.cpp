@@ -1,6 +1,7 @@
 #include "EShortcutListener.hpp"
 #include "EUtilities-Windows.hpp"
 #include "EUtilities.hpp"
+
 #include <print>
 #include <vector>
 #include <thread>
@@ -21,11 +22,11 @@ TEST(EShortcutListener, IsListening)
 {
 	EShortcutListener listener;
 	EXPECT_FALSE(listener.isListening());
-	listener.setTargetKeys(Key::A);
+	listener.setTargetKeys({ Key::A });
 	EXPECT_FALSE(listener.isListening());
 	listener.startListening([]() {});
 	EXPECT_TRUE(listener.isListening());
-	listener.setTargetKeys(Key::B);
+	listener.setTargetKeys({ Key::B });
 	EXPECT_TRUE(listener.isListening());
 	listener.stopListening();
 	EXPECT_FALSE(listener.isListening());
@@ -36,7 +37,7 @@ TEST(EShortcutListener, SetTargetKeys)
 	EShortcutListener listener;
 	listener.setTargetKeys({ Key::A, Key::B, Key::C });
 	EXPECT_TRUE(std::ranges::equal(listener.targetKeys(), std::vector{ Key::A, Key::B, Key::C }));
-	listener.setTargetKeys(Key::D);
+	listener.setTargetKeys({ Key::D });
 	EXPECT_TRUE(std::ranges::equal(listener.targetKeys(), std::array{ Key::D }));
 	std::array someKeys{ Key::E, Key::A, Key::D, Key::O };
 	listener.setTargetKeys(someKeys);
