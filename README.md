@@ -26,9 +26,11 @@ For CMake projects, you can do something like this
 include(FetchContent)
 FetchContent_Declare(
     EUtilities
-    URL https://github.com/Force-quit/EUtilities/archive/refs/tags/v1.1.zip # check for newer versions if possible
+    GIT_REPOSITORY https://github.com/Force-quit/EUtilities.git
+    GIT_TAG        main
 )
 FetchContent_MakeAvailable(EUtilities)
+
 target_link_libraries(YourProjectName PRIVATE EUtilities)
 ```
 And that's it! You should be able to `#include "EUtilities.hpp"` and your project should link with the .lib of EUtilities automatically.
